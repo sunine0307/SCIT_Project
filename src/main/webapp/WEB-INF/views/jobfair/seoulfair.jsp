@@ -173,7 +173,7 @@
                          <td>${list.jobfair_office }</td>
                          <td>${list.jobfair_jobDescription }</td>
                          <td>${list.jobfair_requirements }</td>
-                         <td><a href="/jobFair/editfair?jobfair_no=${seoulList.jobfair_no}" >edit </a> </td>
+                         <td><a href="/jobFair/editfair?jobfair_no=${list.jobfair_no}" >edit </a> </td>
                          
                        </tr>
                      </c:forEach>  
