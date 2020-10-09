@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.web39.dao.RoomMapper">
+   
+   
+   <!-- 스터디룸 개인예약목록 확인 , 테이블변경 후 수정 0929 -->
+   <select id="checkBookOne" parameterType="hashmap" resultType="room">
+   select
+         b.seat_aloc_sq,
+         b.seat_sq,
+         b.member_id,
+         to_char(b.seat_aloc_dd, 'YYYY-MM-DD hh:mi:ss') as seat_aloc_dd,
+         b.seat_aloc_strt_tm,
+         to_char(b.seat_aloc_end_tm, 'hh:mi') as seat_aloc_end_tm,
+         s.seat_nm
+      from
+         seat_aloc_tb b, seat_tb s
+      where
+         b.seat_sq = s.seat_sq
+      and
+         b.member_id = #{member_id}
+      order by
+         seat_aloc_sq desc
+   </select>
+   
+   <!-- 스터디룸 예약목록 페이징을 위한 조회 -->
+   <select id="boardCount" parameterType="hashmap" resultType="int">
+   select
+      count(*)
+   from
+      seat_aloc_tb b, seat_tb s
+   where
+      b.seat_sq = s.seat_sq
+   and
+      b.member_id = #{member_id}
+   
+   </select>
+   
+   
+   <!-- 퇴실버튼 눌렀을 때 퇴실시간 업데이트-->
+   <update id="updateEndTm2" parameterType="int">
+      update
+         seat_aloc_tb
+      set
+         seat_aloc_end_tm = sysdate
+      where
+         seat_aloc_sq = #{seat_aloc_sq}
+   </update>
+   
+   <!-- 퇴실버튼 눌렀을 때 타임라인 0 업데이트 -->
+   <update id="timeLineCheck" parameterType="hashmap">
+      update
+             sbtime_tb
+      set
+             check_tm = 0
+      where
+          seat_sq = #{seat_sq}
+       and
+          timeline = #{timeLine}
+   </update>
+   
+   
+   
+   <!-- 퇴실시간 전송 -->
+   <select id="endTm" parameterType="int" resultType="room">
+      select
+         to_char(seat_aloc_end_tm, 'hh:mi') as seat_aloc_end_tm
+      from
+         seat_aloc_tb
+      where
+         seat_aloc_sq = #{seat_aloc_sq}
+   </select>
+   
+   <!-- 퇴실안한 목록만 보여주기 -->
+   <!-- <select id="oneList" parameterType="hashmap" resultType="room">
+      select
+         b.seat_aloc_sq,
+         b.seat_sq,
+         b.member_id,
+         to_char(b.seat_aloc_dd, 'YYYY-MM-DD hh:mi:ss') as seat_aloc_dd,
+         to_char(b.seat_aloc_strt_tm, 'hh:mi') as seat_aloc_strt_tm,
+         to_char(b.seat_aloc_end_tm, 'hh:mi') as seat_aloc_end_tm,
+         s.seat_nm
+      from
+         seat_aloc_tb b, seat_tb s
+      where
+         b.seat_sq = s.seat_sq
+        and
+            b.member_id = #{member_id}
+        and
+            seat_aloc_end_tm is null
+      order by
+         seat_aloc_sq desc
+   </select> -->
+   
+   <!-- 퇴실안한 목록만 보여주기, 테이블변경 후 0929 -->
+   <select id="oneList" parameterType="hashmap" resultType="room">
+      select
+         b.seat_aloc_sq,
+         b.seat_sq,
+         b.member_id,
+         to_char(b.seat_aloc_dd, 'YYYY-MM-DD hh:mi:ss') as seat_aloc_dd,
+         b.seat_aloc_strt_tm,
+         to_char(b.seat_aloc_end_tm, 'hh:mi') as seat_aloc_end_tm,
+         s.seat_nm
+      from
+         seat_aloc_tb b, seat_tb s
+      where
+         b.seat_sq = s.seat_sq
+        and
+            b.member_id = #{member_id}
+        and
+            seat_aloc_end_tm is null
+      order by
+         seat_aloc_sq desc
+   </select>
+   
+   <!-- 예약화면에서 select/option에서 보여줄 스터디룸 -->
+   <select id="listSeat" resultType="room">
+      select
+         seat_sq,
+         seat_nm
+      from
+         seat_tb
+    
+   </select>
+   
+   <!-- 예약화면에서 룸별 시간 보여주기 -->
+   <select id="selectTime" parameterType="int" resultType="time">
+      select
+         sbtime_sq,
+         seat_sq,
+         timeline
+      from
+         sbtime_tb
+      where
+         seat_sq = #{seat_sq}
+      and
+         check_tm = 0
+   </select>
+   
+   <!-- 스터디룸 예약하기 -->
+   <!--<insert id="seatBook" parameterType="room">
+      insert into
+         seat_aloc_tb(
+            seat_aloc_sq,
+            seat_sq,
+            member_id,
+            seat_aloc_strt_tm
+         )values(
+            seat_aloc_tb_sq.nextval,
+            #{seat_sq},
+            #{member_id},
+            to_date(#{seat_aloc_strt_tm}, 'hh:mi')
+         )
+   </insert>-->
+   
+   <!-- 스터디룸 예약하기 / 테이블  변경 후_0929  -->
+    <insert id="seatBook" parameterType="room">
+      insert into
+         seat_aloc_tb(
+            seat_aloc_sq,
+            seat_sq,
+            member_id,
+            seat_aloc_strt_tm
+         )values(
+            seat_aloc_tb_sq.nextval,
+            #{seat_sq},
+            #{member_id},
+            #{seat_aloc_strt_tm}
+         )
+   </insert>
+   
+   
+   
+   <!-- 스터디룸 예약취소하기 -->
+   <delete id="roomDel" parameterType="room">
+      delete from
+         seat_aloc_tb
+      where
+         seat_aloc_sq = #{seat_aloc_sq}
+      and
+         member_id = #{member_id}
+   </delete>
+   
+   <!-- 스터디룸 예약 변경 -->
+   <update id="updateBook" parameterType="room">
+      update
+             seat_aloc_tb
+      set
+          seat_sq = #{seat_sq},
+          seat_aloc_strt_tm = #{seat_aloc_strt_tm}
+      where
+          seat_aloc_sq = #{seat_aloc_sq}
+      and
+          member_id = #{member_id}   
+   
+   </update>
+   
+   <!-- 예약가능 시간 업데이트  1로 업데이트-->
+   <update id="updateTimeLine" parameterType="hashmap">
+      update
+         sbtime_tb
+      set
+         check_tm = 1
+      where
+         seat_sq = #{seat_sq}
+      and
+         timeline = #{timeLine}
+   </update>
+   
+   <!-- 예약중복체크 -->
+   <select id="check" parameterType="string" resultType="room">
+      select
+         b.member_id,
+         to_char(b.seat_aloc_dd, 'YYYY-MM-DD hh:mi:ss') as seat_aloc_dd,
+         b.seat_aloc_strt_tm,
+         s.seat_nm
+      from
+         seat_aloc_tb b, seat_tb s
+      where
+         b.seat_sq = s.seat_sq
+      and
+         member_id = #{member_id}
+      and
+         seat_aloc_end_tm is null
+         
+   </select>
+   
+   
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.web39.dao.CompanyMapper">
+<!-- 등록 -->
+<insert id="addCompany" parameterType="company">
+INSERT INTO lms_companyInfo_table(
+	company_no,
+	company_longitud,
+	company_latitude,
+	company_name,
+	company_business,
+	company_location,
+	company_alumni,
+	company_link,
+	member_id
+)
+VALUES(
+	seq_lms_company.nextval,
+	#{company_longitud},
+	#{company_latitude},
+	#{company_name},
+	#{company_business},
+	#{company_location},
+	#{company_alumni},
+	#{company_link},
+	#{member_id}
+)
+</insert>
+<!-- 전체조회 -->
+<select id="fetchCompany" resultType="company">
+SELECT * FROM lms_companyInfo_table ORDER BY company_no
+
+</select>
+
+
+<!-- 상세보기 -->
+<select id="selectCompany" parameterType="int" resultType="company">
+SELECT * FROM lms_companyInfo_table WHERE company_no = #{company_no}
+</select>
+
+<!-- 수정하기 -->
+<update id="updateCompany" parameterType="company">
+UPDATE lms_companyInfo_table
+SET
+	company_longitud=#{company_longitud},
+	company_latitude=#{company_latitude},
+	company_name=#{company_name},
+	company_business=#{company_business},
+	company_location=#{company_location},
+	company_alumni=#{company_alumni},
+	company_link=#{company_link}
+WHERE company_no = #{company_no}
+
+</update>
+<!-- 삭제하기 -->
+<delete id="deleteCompany" parameterType="int">
+DELETE lms_companyInfo_table WHERE company_no=#{company_no}
+
+</delete>
+
+<!-- 댓글 등록하기 -->
+<insert id="addComment" parameterType="comment">
+INSERT INTO lms_comment_table(
+	comment_no,
+	comment_content,
+	member_id,
+	company_no
+)VALUES(
+	seq_lms_comment.nextval,
+	#{comment_content},
+	#{member_id},
+	#{company_no}
+)
+</insert>
+
+<!-- 댓글 가져오기 -->
+<select id="fetchComment" parameterType="int" resultType="comment" >
+SELECT * FROM lms_comment_table WHERE company_no=#{company_no} order by comment_indate
+</select>
+</mapper>

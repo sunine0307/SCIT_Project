@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.sesoc.web39.vo.MemberVO" alias="member" />
+		<typeAlias type="com.sesoc.web39.vo.EventVO" alias="event" />
+		<typeAlias type="com.sesoc.web39.vo.CompanyVO" alias="company" />
+		<typeAlias type="com.sesoc.web39.vo.CommentVO" alias="comment" />
+		<typeAlias type="com.sesoc.web39.vo.NoticeVO" alias="notice" />
+		<typeAlias type="com.sesoc.web39.vo.RoomVO" alias="room"/>
+      	<typeAlias type="com.sesoc.web39.vo.TimeLine" alias="time"/>
+     	<typeAlias type="com.sesoc.web39.vo.JobFairVO" alias="jobfair"/>		
+		
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/eventMapper.xml" />
+		<mapper resource="mapper/companyMapper.xml" />
+		<mapper resource="mapper/noticeMapper.xml" />
+		<mapper resource="mapper/roomMapper.xml"/>
+       <mapper resource="mapper/jobFairMapper.xml" />
+	</mappers>
+</configuration>

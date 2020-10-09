@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.web39.dao.EventMapper">
+<!-- 이벤트를 저장 -->
+<insert id="addEvent" parameterType="event">
+INSERT INTO lms_calendar_table(
+	event_id,
+	member_id,
+	event_title,
+	event_start,
+	event_end,
+	event_type,
+	event_description,
+	event_backgroundColor
+) VALUES(
+	lms_calendar_seq.nextval,
+	#{member_id},
+	#{event_title},
+	#{event_start},
+	#{event_end},
+	#{event_type},
+	#{event_description},
+	#{event_backgroundColor}
+)
+
+</insert>
+<!-- 이벤트를 불러옴 -->
+<select id="fetchEvent" resultType="event">
+SELECT * FROM lms_calendar_table ORDER BY event_id
+
+</select>
+
+<!-- 이벤트를 수정함 -->
+<update id="updateEvent" parameterType="event">
+UPDATE lms_calendar_table 
+SET event_title=#{event_title},
+	event_start=#{event_start},
+	event_end=#{event_end},
+	event_type=#{event_type},
+	event_description=#{event_description},
+	event_backgroundColor=#{event_backgroundColor}
+WHERE event_id = #{event_id}
+
+</update> 
+
+<!-- 이벤트를 삭제함 -->
+<delete id="deleteEvent" parameterType="event">
+DELETE FROM lms_calendar_table
+WHERE event_id = #{event_id}
+
+</delete>
+
+
+</mapper>

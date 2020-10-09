@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.web39.dao.JobFairMapper">
+   
+   <!-- 잡페어 등록 -->
+   <insert id="addJobFair" parameterType="jobfair">
+      insert into
+         job_fair_table(
+            jobfair_no,
+            member_id,
+            jobfair_companyName,
+            jobfair_office,
+            jobfair_requirements,
+            jobfair_type,
+            jobfair_jobDescription,
+            jobfair_business
+         )values(
+            seq_lms_jobfair.nextval,
+            #{member_id},
+            #{jobfair_companyName},
+            #{jobfair_office},
+            #{jobfair_requirements},
+            #{jobfair_type},
+            #{jobfair_requirements},
+            #{jobfair_business}
+         )
+   </insert>
+   
+   <!-- 서울페어 LIST 검색 -->
+   <select id="selectSeoulList" resultType="jobfair">
+      select
+         jobfair_no,
+         jobfair_companyName,
+         jobfair_business,
+         jobfair_office,
+         jobfair_jobDescription,
+         jobfair_requirements
+      from
+         job_fair_table
+      where
+         jobfair_type = 'seoul'
+      order by
+         jobfair_no desc
+   </select>
+   
+   <!-- 도쿄페어 LIST 검색 -->
+   <select id="selectokyoList" resultType="jobfair">
+      select
+         jobfair_no,
+         jobfair_companyName,
+         jobfair_business,
+         jobfair_office,
+         jobfair_jobDescription,
+         jobfair_requirements
+      from
+         job_fair_table
+      where
+         jobfair_type = 'tokyo'
+      order by
+         jobfair_no desc
+   </select>
+   
+   <!-- 스페셜페어 LIST 검색 -->
+   <select id="selectSpecialList" resultType="jobfair">
+      select
+         jobfair_no,
+         jobfair_companyName,
+         jobfair_business,
+         jobfair_office,
+         jobfair_jobDescription,
+         jobfair_requirements
+      from
+         job_fair_table
+      where
+         jobfair_type = 'special'
+      order by
+         jobfair_no desc
+   </select>
+   
+   <!-- 검색 -->
+   
+	<!-- 수정,삭제용 글 하나 검색 -->
+   <select id="oneListFair" parameterType="int" resultType="jobfair">
+     select
+        jobfair_no,
+        jobfair_companyName,
+        jobfair_office,
+        jobfair_requirements,
+        jobfair_type,
+        jobfair_jobDescription,
+        jobfair_business
+     from
+        job_fair_table
+     where
+        jobfair_no = #{jobfair_no}
+   </select>
+   
+   <!-- 페어 기업정보 수정 -->
+   <update id="updateFair" parameterType="jobfair">
+     update
+        job_fair_table
+     set
+        jobfair_companyName = #{jobfair_companyName},
+        jobfair_office = #{jobfair_office},
+        jobfair_requirements = #{jobfair_requirements},
+        jobfair_type = #{jobfair_type},
+        jobfair_jobDescription = #{jobfair_jobDescription},
+        jobfair_business = #{jobfair_business}
+     where
+        jobfair_no = #{jobfair_no}
+   </update>
+   
+   <!-- 페어 삭제 -->
+   <delete id="deleteFair" parameterType="int">
+      delete from
+         job_fair_table
+      where
+         jobfair_no = #{jobfair_no}
+   </delete>
+
+</mapper>

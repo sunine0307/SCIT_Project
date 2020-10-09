@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.web39.dao.NoticeMapper">
+
+   <insert id="noticeSend" parameterType="notice">
+      insert into
+          lms_notice_table(
+              notice_id
+              ,member_id
+              ,notice_title
+              ,notice_content
+              ,notice_type
+          )values(
+             seq_lms_notice.nextval
+             ,#{member_id}
+              ,#{notice_title}
+              ,#{notice_content}
+              ,#{notice_type}
+          )
+   </insert>
+   
+   <select id="noticeList" resultType="notice">
+      select
+         notice_title
+         ,notice_content
+         ,notice_type
+         ,to_char(notice_indate, 'YYYY-MM-DD') as notice_indate
+      from
+         lms_notice_table
+   </select>
+
+</mapper>
