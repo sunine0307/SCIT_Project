@@ -68,12 +68,12 @@
       function timeCheck(){
          // select 유효성검사
          if($('#seat_sq').val() == ""){
-            alert("스터디룸을 선택해주세요");
+            alert("please select studyroom");
             return false;
          }
 
          if($('#seat_aloc_strt_tm').val() == ""){
-            alert("시작시간을 선택해주세요");
+            alert("Please select start time");
             return false;
          }
 
@@ -92,11 +92,11 @@
                async: false,            // 비동기방식을 동기로 사용해서 true false 반환하기
                success: function(res){
                   if(res == "1"){
-                     alert("이미 예약되어있습니다.");
+                     alert("Already occupied");
                       $('input[type="submit"]').attr("disabled", true);
                   }
                   else{
-                     alert("예약가능합니다.");
+                     alert("Available");
                      $('input[type="submit"]').attr("disabled", false);
                   }
                },
@@ -219,23 +219,22 @@
           <div class="row justify-content-center">
             <div class="col-12">
               <h2 class="page-title">MAKE A RESERVATION</h2>
-              <p> Tables with built-in bootstrap styles </p>
+              <p> Please check notice before making a reservation</p>
                    
                        <div class="row">
-                       <p>스터디룸을 예약하기 전에 이용안내사항을 확인해주세요</p>
                          <!--<div class="col-md-6 mb-4">-->
                         <div class="col-md-12">
                            <div class="accordion w-100" id="accordion1">
                              <div class="card shadow">
                                <div class="card-header" id="heading1">
                                  <a role="button" href="#collapse1" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                   <strong>스터디룸 이용안내</strong>
+                                   <strong>Notice</strong>
                                  </a>
                                </div>
                                <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordion1">
                                  <div class="card-body"> 
-                                       스터디룸은 오전 9시부터 오후 11시까지 이용가능합니다. 당일 예약만 가능하며,이용완료 후 반드시 퇴실확인을 진행해야합니다.
-                                       퇴실 및 예약취소를 위한 절차는 <span><button type="button" id="moveRoomCheck" class="btn mb-2 btn-outline-success">개인예약확인</button></span> 페이지에서 진행할 수 있습니다.
+                                       Study room is available between 9AM and 11PM. The reservation is restricted to on the day. To check out or cancel your reservation, 
+                                       press <span><button type="button" id="moveRoomCheck" class="btn mb-2 btn-outline-success">My reservation</button></span> 
                                  </div>
                                </div>
                              </div>
@@ -243,12 +242,9 @@
                              <div class="card shadow">
                                <div class="card-header" id="heading1">
                                  <a role="button" href="#collapse3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                   <strong>주의사항</strong>
                                  </a>
                                </div>
-                               <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion1">
-                                 <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. </div>
-                               </div>
+                               
                              </div>
                            </div>
                          </div>
@@ -318,8 +314,8 @@
                  
                         <div>
                            <input type="hidden" id="user_id" name="member_id" value="${sessionScope.loginId }">
-                           <input type="button" class="btn mb-2 btn-outline-primary" id="doubleCheck" value="예약가능 확인하기">
-                           <input type="submit" class="btn mb-2 btn-outline-warning" disabled="disabled" value="예약하기" >
+                           <input type="button" class="btn mb-2 btn-outline-primary" id="doubleCheck" value="Check availble time">
+                           <input type="submit" class="btn mb-2 btn-outline-warning" disabled="disabled" value="Make a reservation" >
                         </div>
                         
                         </div> <!-- card-body 끝 -->

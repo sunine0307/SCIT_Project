@@ -62,10 +62,10 @@
                $('.btn-outline-warning').attr("disabled", true); // 예약취소버튼 비활성화하기
                $('.btn-outline-success').attr("disabled", true);// 예약수정버튼 비활성화하기
 
-               alert('퇴실하였습니다');
+               alert('Check Out');
             },
             error: function(e){
-               alert("예약되어있지 않습니다");
+               alert("Reservation does not exist");
                console.log(e);
             }
          });
@@ -88,7 +88,7 @@
             success: function(res){
                // alert(예약취소성공);
                if(res == 'delete'){
-                  alert('예약취소성공');
+                  alert('Cancel reservation');
                   //location.reload();   // 페이지새로고침
                   $("#changeOneList").load("/roomBook/roomCheck #changeOneList");   // 테이블 부분만 로드하게 바꿈, 페이지깜빡임 x
                   $("#changeTable").load("/roomBook/roomCheck #changeTable");   // 전체리스트 테이블 부분만 로드하게 바꿈, 페이지깜빡임 x
@@ -97,7 +97,7 @@
    
             },
             error: function(e){
-               alert("예약되어있지 않습니다");
+               alert("Reservation does not exist");
                console.log(e);
             }
          });
@@ -129,7 +129,7 @@
                
             },
             error: function(e){
-               alert("예약가능시간 없음");
+               alert("Not Available");
                console.log(e);
             }
          });
@@ -291,22 +291,21 @@
           <div class="row justify-content-center">
             <div class="col-12">
               <h2 class="page-title">MY RESERVATION</h2>
-              <!--<p> Tables with built-in bootstrap styles  </p>-->
 
                         <div class="col-md-12">
-                        <p>스터디룸 이용을 위한 안내사항을 확인해주세요</p>
+                        <p>Please check notice before book your reservation</p>
                            <div class="accordion w-100" id="accordion1">
                              <div class="card shadow">
                                <div class="card-header" id="heading1">
                                  <a role="button" href="#collapse1" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                   <strong>스터디룸 이용안내</strong>
+                                   <strong>Notice</strong>
                                  </a>
                                </div>
                                <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordion1">
                                  <div class="card-body"> 
-                                       스터디룸은 오전 9시부터 오후 11시까지 이용가능합니다. 당일 예약만 가능하며,이용완료 후 반드시 
+                                       Study room is available between 9AM and 11PM. The reservation is restricted to on the day. After using study room, please check out your reservation. 
                                        <span><button type="button" class="btn mb-2 btn-outline-primary" disabled="disabled">CHECK OUT</button></span>
-                                       버튼을 통해 퇴실을 진행해야합니다. 퇴실하지 않을 경우 다른 예약은 불가능합니다.
+                                       button to check out your reservation. If you do not check out yours reservation, you cannot book anoter reservation.
                                  </div>
                                </div>
                              </div>
@@ -314,12 +313,12 @@
                              <div class="card shadow">
                                <div class="card-header" id="heading1">
                                  <a role="button" href="#collapse2" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                   <strong>스터디룸 예약하기</strong>
+                                   <strong>Make a reservation</strong>
                                  </a>
                                </div>
                                <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion1">
                                  <div class="card-body"> 
-                                       스터디룸 예약은 <span><button type="button" id="moveRoomCheck" class="btn mb-2 btn-outline-info">MAKE A RESERVATION</button></span> 페이지에서 진행할 수 있습니다.
+                                  Booking is available on <span><button type="button" id="moveRoomCheck" class="btn mb-2 btn-outline-info">MAKE A RESERVATION</button></span> 
                                  </div>
                                </div>
                              </div>
@@ -327,7 +326,7 @@
                              <div class="card shadow">
                                <div class="card-header" id="heading1">
                                  <a role="button" href="#collapse3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                   <strong>주의사항</strong>
+                                   <strong>Notice</strong>
                                  </a>
                                </div>
                                <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion1">
@@ -345,8 +344,8 @@
                   <div class="card shadow">
                     <div class="card-body">
                    
-                    <h3 class="card-title">당일 예약 목록</h3>
-                       <p class="card-text">현재 예약한 스터디룸</p>
+                    <h3 class="card-title">Reservation List</h3>
+                       <p class="card-text">Your reservation</p>
                     <!-- table -->
                        <div id="changeOneList">
                        <table border="1" id="listTable" class="table table-bordered">
@@ -509,7 +508,7 @@
                   <div class="card shadow">
                     <div class="card-body">
                     <h3 class="card-title">TOTAL RESERVATION LIST</h3>
-                      <p class="card-text">${sessionScope.loginId } 님의 현재까지 스터디룸 이용 수 : ${navi.totalRecordsCount }</p>
+                      <p class="card-text">${sessionScope.loginId }'s current reservation : ${navi.totalRecordsCount }</p>
                       <!-- table -->
                       <div id="changeTable">
                   <table border="1" id="listTable" class="table table-bordered">

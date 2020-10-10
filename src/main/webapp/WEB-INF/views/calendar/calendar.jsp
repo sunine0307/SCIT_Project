@@ -131,9 +131,9 @@
         <div id="contextMenu" class="dropdown clearfix">
             <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
                 style="display:block;position:static;margin-bottom:5px;">
-                <li><a tabindex="-1" href="#">학사일정</a></li>
-                <li><a tabindex="-1" href="#">구직활동</a></li>
-                <li><a tabindex="-1" href="#">기타</a></li>
+                <li><a tabindex="-1" href="#">IT Class</a></li>
+                <li><a tabindex="-1" href="#">Japanese Class</a></li>
+                <li><a tabindex="-1" href="#">Job Fair</a></li>
                 <li class="divider"></li>
                 <li><a tabindex="-1" href="#" data-role="close">Close</a></li>
             </ul>
@@ -155,78 +155,78 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-title">일정 이름</label>
+                                <label class="col-xs-4" for="edit-title">name</label>
                                 <input class="inputModal" type="text" name="edit-title" id="edit-title" required="required" />
                                
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-start">일정 시작</label>
+                                <label class="col-xs-4" for="edit-start">start</label>
                                 <input class="inputModal" type="text" name="edit-start" id="edit-start" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-end">일정 끝</label>
+                                <label class="col-xs-4" for="edit-end">end</label>
                                 <input class="inputModal" type="text" name="edit-end" id="edit-end" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-type">구분</label>
+                                <label class="col-xs-4" for="edit-type">type</label>
                                 <select class="inputModal" name="edit-type" id="edit-type">
-                                    <option value="학사일정">학사일정</option>
-                                    <option value="구직활동">구직활동</option>
-                                    <option value="기타">기타</option>
+                                    <option value="IT Class">IT Class</option>
+                                    <option value="Japanese Class">Japanese Class</option>
+                                    <option value="Job Fair">Job Fair</option>
 
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-color">구분색상</label>
+                                <label class="col-xs-4" for="edit-color">Color</label>
                                 <select class="inputModal" name="color" id="edit-color">
-                                    <option value="#D25565" style="color:#D25565;">빨간색</option>
-                                    <option value="#9775fa" style="color:#9775fa;">보라색</option>
-                                    <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
-                                    <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
-                                    <option value="#f06595" style="color:#f06595;">핑크색</option>
+                                    <option value="#D25565" style="color:#D25565;">Red</option>
+                                    <option value="#9775fa" style="color:#9775fa;">Purple</option>
+                                    <option value="#ffa94d" style="color:#ffa94d;">Orange</option>
+                                    <option value="#74c0fc" style="color:#74c0fc;">Blue</option>
+                                    <option value="#f06595" style="color:#f06595;">Pink</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-desc">설명</label>
+                                <label class="col-xs-4" for="edit-desc">Description</label>
                                 <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
                                     id="edit-desc"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer modalBtnContainer-addEvent">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary" id="save-event">저장</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                        <button type="button" class="btn btn-primary" id="save-event">edit</button>
                     </div>
                     <div class="modal-footer modalBtnContainer-modifyEvent">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
-                        <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                        <button type="button" class="btn btn-danger" id="deleteEvent">delete</button>
+                        <button type="button" class="btn btn-primary" id="updateEvent">edit</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">필터</h3>
+                <h3 class="panel-title">Filter</h3>
             </div>
             <div class="panel-body">
                 <div class="col-lg-6">
-                    <label for="calendar_view">구분별</label>
+                    <label for="calendar_view">Type</label>
                     <div class="input-group">
                         <select class="filter" id="type_filter" multiple="multiple">
-                            <option value="학사일정">학사일정</option>
-                            <option value="구직활동">구직활동</option>
-                            <option value="기타">기타</option>
+                            <option value="IT Class">IT Class</option>
+                            <option value="Japanese Class">Japanese Class</option>
+                            <option value="Job Fair">Job Fair</option>
                         </select>
                     </div>
                 </div>
@@ -241,7 +241,6 @@
     <script src="/resources/calendar/vendor/js/bootstrap.min.js"></script>
     <script src="/resources/calendar/vendor/js/moment.min.js"></script>
     <script src="/resources/calendar/vendor/js/fullcalendar.min.js"></script>
-    <script src="/resources/calendar/vendor/js/ko.js"></script>
     <script src="/resources/calendar/vendor/js/select2.min.js"></script>
     <script src="/resources/calendar/vendor/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/resources/calendar/js/main.js"></script>

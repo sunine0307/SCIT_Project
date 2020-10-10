@@ -125,7 +125,6 @@
                   <div class="card shadow mb-4">
                     <div class="card-header">
                       <strong class="card-title">Comments</strong>
-                      <span class="float-right"><i class="fe fe-message-circle mr-2"></i>댓글 개수</span>
                     </div>
                     <div class="card-body">
                     

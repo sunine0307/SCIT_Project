@@ -22,7 +22,7 @@ var calendar = $('#calendar').fullCalendar({
                               },
   eventLimitClick           : 'week', //popover
   navLinks                  : true,
-  defaultDate               : moment('2020-09'), //실제 사용시 현재 날짜로 수정
+  defaultDate               : moment('2020-10'), //실제 사용시 현재 날짜로 수정
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
   editable                  : true,
@@ -108,9 +108,9 @@ events: function(start, end, timezone, callback) {
       content: $('<div />', {
           class: 'popoverInfoCalendar'
         })
-        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
-        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
+        .append('<p><strong>Type:</strong> ' + event.type + '</p>')
+        .append('<p><strong>Time:</strong> ' + getDisplayEventDate(event) + '</p>')
+        .append('<div class="popoverDescCalendar"><strong>Desc:</strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
         hide: "50"
