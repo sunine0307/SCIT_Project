@@ -124,27 +124,26 @@
         </nav>
       </aside>
         <main role="main" class="main-content">
-      
-    <div class="wrapper vh-100">
-      <div class="row align-items-center h-100">
-        <div class="col-lg-3 col-md-4 col-10 mx-auto text-center">
-          <a class="navbar-brand mx-auto mt-2 flex-fill text-center" >
-            <img src="/resources/Chatbot_QR.jpg">
-          </a>
-          <br>
-          
-          <h3>You can access to [SCIT CHATBOT] with above QR code</h3>
-        	<br>
-        	<h4>Functions can be founded further below</h4>
-        	<br>
-        	<h5>-move to studyroom reservation</h5>
-        	<h5>-find upcoming events</h5>
-        	<h5>-look for information regarding jobfair</h5>
-        	<h5>-contact to SCIT officers</h5>
-        	
-        </div>
-      </div>
-    </div>
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                      <h3 class="card-title">CHATBOT QR CODE</h3>
+                      <div class="card-title">
+                         <!-- 이미지 동적으로 크기 변환 찾아보기 -->
+                          <div class="card-body"> 
+                          			[SCIT CHATBOT] provides services to help you to find information in SCIT Learning Management System <br>
+                                      You can use [SCIT CHATBOT] with above QR code<br>
+                                     
+                                 </div>
+                          <center>
+                            <img src="/resources/Chatbot_QR.jpg" width="500px" height="500px">
+                         </center>
+                      </div>
+                      
+                    </div>
+                </div>
+            </div> <!-- 이미지 마지막 --> 
+ 
     <script src="/resources/js/jquery.min.js"></script>
     <script src="/resources/js/popper.min.js"></script>
     <script src="/resources/js/moment.min.js"></script>
