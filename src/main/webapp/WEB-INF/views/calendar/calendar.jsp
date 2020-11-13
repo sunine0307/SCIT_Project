@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FullCalendar Example</title>
+    <title>SCIT Calendar</title>
     <link rel="stylesheet" href="/resources/calendar/vendor/css/fullcalendar.min.css" />
     <link rel="stylesheet" href="/resources/calendar/vendor/css/bootstrap.min.css">
     <link rel="stylesheet" href='/resources/calendar/vendor/css/select2.min.css' />
@@ -28,7 +28,7 @@
     
 </head>
 <body class="vertical  light  ">
-	 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+ <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
           <i class="fe fe-x"><span class="sr-only"></span></i>
         </a>
@@ -41,7 +41,7 @@
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-              <a href="/mypage"  > <!-- 여기에 마이페이지 호출주소 넣어주면 됨 -->
+              <a href="/member2/mypage"  > <!-- 여기에 마이페이지 호출주소 넣어주면 됨 -->
                 <i class="fe fe-user fe-16"></i>
                 <span class="ml-3 item-text">MY PAGE</span>
               </a>
@@ -118,13 +118,14 @@
           </ul>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://www.naver.com/" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
+            <a href="/member2/logout" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
               <i class="fe fe-shield fe-16"></i><span class="small"> LOG OUT </span>
             </a>
           </div>     
         </nav>
       </aside>
 	
+   <main role="main" class="main-content">
  
     <div class="container">
         <!-- 일자 클릭시 메뉴오픈 -->
@@ -233,10 +234,12 @@
 
             </div>
         </div>
+        
         <!-- /.filter panel -->
     </div>
-    <!-- /.container -->
     
+    <!-- /.container -->
+    </main>
     <script src="/resources/calendar/vendor/js/jquery.min.js"></script>
     <script src="/resources/calendar/vendor/js/bootstrap.min.js"></script>
     <script src="/resources/calendar/vendor/js/moment.min.js"></script>

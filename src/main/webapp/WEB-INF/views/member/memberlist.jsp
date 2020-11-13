@@ -55,7 +55,7 @@
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-              <a href="/mypage"  > <!-- 여기에 마이페이지 호출주소 넣어주면 됨 -->
+              <a href="/member2/mypage"  > <!-- 여기에 마이페이지 호출주소 넣어주면 됨 -->
                 <i class="fe fe-user fe-16"></i>
                 <span class="ml-3 item-text">MY PAGE</span>
               </a>
@@ -132,13 +132,14 @@
           </ul>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://www.naver.com/" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
+            <a href="/member2/logout" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
               <i class="fe fe-shield fe-16"></i><span class="small"> LOG OUT </span>
             </a>
           </div>     
         </nav>
       </aside>
   <main role="main" class="main-content">
+  <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4" id="table">
             <div class="card-header py-3">
@@ -151,102 +152,22 @@
                     <tr>
                       <th>Name</th>
                       <th>E-mail</th>
-                      <th>Job</th>
+                      <th>Company</th>
                       <th>Position</th>
-                      <th>Office</th>
                       <th>Course</th>
                     </tr>
                   </thead>
                <!-- 조건문 넣어서 회원 데이터베이스 불러오면 됩니다 -->
                   <tbody>
+                  <c:forEach var="member" items="${member}">
                     <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
+                      <td>${member.member_name}</td>
+                      <td>${member.member_email}</td>
+                      <td>${member.member_company}</td>
+                      <td>${member.member_position}</td>
+                      <td>${member.member_course}</td>
                     </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                    <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
-                 <tr>
-                      <td>Seokwoo Hong</td>
-                      <td>nt110269@naver.com</td>
-                      <td>Rakuten</td>
-                      <td>Application Engineer</td>
-                      <td>Tokyo</td>
-                      <td>SCIT-39</td>
-                    </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>
@@ -297,7 +218,57 @@
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
     </script>
+<script src="/resources/table/vendor/jquery/jquery.min.js"></script>
+ <script type="text/javascript">
 
+    	var socket = null;
+    	$(document).ready( function() {
+    	    connect();	
+    	});
+
+	function connect(){
+		var ws = new WebSocket("ws://localhost:8888/replyEcho?bno=1234");
+		socket = ws;
+
+	    ws.onopen = function () {
+	        console.log('Info: connection opened.');
+	    };
+
+
+	    ws.onmessage = function (event) { 
+	        console.log("receive message: ",event.data+'\n');
+			let $socketAlert = $('div#socketAlert');
+			$socketAlert.text("Please Check Notice Board");
+			$socketAlert.css('display', 'block');
+			setTimeout(function(){
+				$socketAlert.css('display', 'none');
+				},10000);
+	    };
+
+
+	    ws.onclose = function (event) { 
+		    console.log('Info: connection closed.'); 
+		};
+	    ws.onerror = function (err) { 
+		    console.log('Error:' , err); 
+		};
+					
+		}
+	    
+	</script>
+    <script type="text/javascript">
+	$(function() {
+	    $('#btnSend').on('click', function(evt) {
+		  evt.preventDefault();
+	  if (socket.readyState !== 1) return;
+	    	  socket.send("새로운 공지가 등록되었습니다.");
+	    	  document.getElementById('noticeActivate').submit();
+	    });
+	    connect();
+		
+	});
+
+	</script> 
 </body>
 
 </html>

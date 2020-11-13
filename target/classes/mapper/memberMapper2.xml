@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.web39.login.MemberMapper2">
+
+<!-- 
+<insert id="joinMember2" parameterType="member2">
+INSERT INTO lms_member_table (member_id, member_pw, member_name, member_email,
+   member_mobile, member_class_j, member_class_it, member_course, member_no)
+VALUES
+   (#{member_id}, #{member_pw}, #{member_name}, #{member_email}, #{member_mobile}, 
+   #{member_class_j}, #{member_class_it}, #{member_course}, lms_member_seq.NextVal)
+</insert>
+-->
+
+<!--1018 회원가입 -->
+<insert id="joinMember2" parameterType="member2">
+   insert into 
+      lms_member_table(
+         member_no,
+          member_id,
+          member_pw,
+          member_name,
+          member_email,
+          member_mobile,
+          member_company,
+          member_position,
+          member_course
+          <if test="originalfile != null">
+             ,originalfile
+             ,savedfile
+          </if>
+         )values(
+         lms_member_seq.nextval,
+         #{member_id},
+         #{member_pw},
+         #{member_name},
+         #{member_email},
+         #{member_mobile},
+          #{member_company},
+          #{member_position},
+          #{member_course}
+         <if test="originalfile != null">
+            ,#{originalfile}
+            ,#{savedfile}
+         </if>
+         )   
+
+</insert>
+
+<!--1018 카카오로 로그인 시 회원가입 여부 체크 -->
+<select id="joinKakaoCheck" parameterType="string" resultType="member2">
+   select
+      member_id,
+      member_no
+   from
+      lms_member_table
+   where
+      member_id = #{member_id}
+</select>
+
+<!-- mypage에 보여줄 정보 검색 -->
+<select id="oneMemeber" parameterType="String" resultType="member2">
+   select
+      member_no,
+      member_id,
+      member_pw,
+      member_name,
+      member_email,
+      member_mobile,
+      member_company,
+      member_position,
+      member_sc_it,
+      member_sc_j,
+      member_course,
+      originalfile,
+      savedfile
+   from
+      lms_member_table
+   where
+      member_id = #{member_id}
+   
+</select>
+
+<!-- 회원정보 수정 -->
+<update id="updateMember" parameterType="member2">
+   update
+      lms_member_table
+   set
+        member_pw = #{member_pw},
+         member_name = #{member_name},
+         member_email = #{member_email},
+         member_mobile = #{member_mobile},
+         member_company = #{member_company},
+         member_position = #{member_position},
+         member_sc_it = #{member_sc_it},
+         member_sc_j = #{member_sc_j},
+         member_course = #{member_course}
+         
+            ,originalfile = #{originalfile}
+            ,savedfile = #{savedfile}
+         
+   where
+      member_no = #{member_no}
+
+</update>
+
+<!-- 회원정보 삭제 -->
+<delete id="deleteMemberInfo" parameterType="member2">
+   delete from
+      lms_member_table
+   where
+      member_no = #{member_no}
+   and
+      member_id = #{member_id}
+</delete>
+
+
+<!-- 일반 로그인을 위한 검색 -->
+<select id="getMember2" parameterType="string" resultType="member2">
+SELECT *
+FROM lms_member_table
+Where member_id = #{member_id}
+
+</select>
+
+<select id="fetchMember2" resultType="member2">
+Select * From lms_member_table order by member_no
+
+</select>
+
+
+
+</mapper>

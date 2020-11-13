@@ -57,7 +57,7 @@ WHERE company_no = #{company_no}
 </update>
 <!-- 삭제하기 -->
 <delete id="deleteCompany" parameterType="int">
-DELETE lms_companyInfo_table WHERE company_no=#{company_no}
+DELETE FROM lms_companyInfo_table WHERE company_no=#{company_no}
 
 </delete>
 

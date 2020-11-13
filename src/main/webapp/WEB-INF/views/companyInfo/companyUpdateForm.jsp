@@ -181,7 +181,7 @@
           </ul>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://www.naver.com/" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
+            <a href="/member2/logout" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
               <i class="fe fe-shield fe-16"></i><span class="small"> LOG OUT </span>
             </a>
           </div>     

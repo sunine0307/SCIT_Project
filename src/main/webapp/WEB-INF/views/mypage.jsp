@@ -22,9 +22,35 @@
     <link rel="stylesheet" href="/resources/css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="/resources/css/app-dark.css" id="darkTheme" disabled>
     
+    <script type="text/javascript" src="/resources/jquery-3.5.1.min.js"></script>
+    
+    <script type="text/javascript">
+
+      function moveEditPage(){   // 회원정보 수정페이지 이동 전 확인
+
+         if(confirm("회원정보를 수정하시겠습니까?") == true){
+            location.href="/member2/moveEditPage";   // 회원정보 수정페이지로 이동
+         }else{
+            return false;
+         }
+      }
+
+      
+      function deleteMemberCheck(){   // 회원정보 삭제 전 확인
+
+         if(confirm("회원정보를 삭제하시겠습니까?") == true){
+            document.memberInfo.submit();
+         }else{
+            return false;
+         }
+      }
+
+    </script>
+    
+    
   </head>
   <body class="vertical  light  ">
-  	
+     
       <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
           <i class="fe fe-x"><span class="sr-only"></span></i>
@@ -115,7 +141,7 @@
           </ul>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://www.naver.com/" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
+            <a href="/member2/logout" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
               <i class="fe fe-shield fe-16"></i><span class="small"> LOG OUT </span>
             </a>
           </div>     
@@ -126,93 +152,75 @@
            <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>       
     <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <div class="col-lg-6 col-md-8 col-10 mx-auto"> <!-- 폼이 시작되는 지점, input 에 name 속성 잘 지정해서 등록 하도록 해주세요 !  -->
+       <div class="col-lg-6 col-md-8 col-10 mx-auto">
+        <form action="/member2/deleteMemberInfo" name="memberInfo" method="get"> <!-- 폼이 시작되는 지점 -->
           <div class="mx-auto text-center my-4">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="https://www.softsociety.net/">
-            <img src="/resources/myphoto.jpg" alt="..." class="avatar-img rounded-circle" height="250" width="200"> <!-- 프로필이 들어갈 경로 -->
-          </a>
-                      <h2 class="my-3">등록번호(학번)</h2>
-          
+            <div class="w-100 mb-4 d-flex">
+            <div class="navbar-brand mx-auto mt-2 flex-fill text-center">
+             <c:if test="${not empty memberInfo.savedfile }">
+               <img src="/member2/download" class="avatar-img rounded-circle" height="250" width="200">
+               
+             </c:if>
+            <c:if test="${empty memberInfo.savedfile }">
+                     첨부된 이미지가 없습니다.
+            </c:if>
+            </div>
+          </div>
+                      <h2 class="my-3">${memberInfo.member_no}</h2>
+                     
           </div> 
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name">Name</label>
-              <input type="text" id="name" class="form-control" readonly="readonly">
+              <input type="text" id="name" placeholder="${memberInfo.member_name}" class="form-control" readonly="readonly">
             </div>
             <div class="form-group col-md-6">
-              <label for="mobile">Mobile</label>
-              <input type="text" id="Mobile" class="form-control" readonly="readonly">
+              <label for="course">Course</label>
+              <input type="text" id="course" placeholder="${memberInfo.member_course}" class="form-control" readonly="readonly">
             </div>
           </div>
-             <div class="form-row">
+           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name">Company</label>
-              <input type="text" id="company" class="form-control" readonly="readonly">
+              <input type="text" id="company" placeholder="${memberInfo.member_company}" class="form-control" readonly="readonly">
             </div>
             <div class="form-group col-md-6">
               <label for="mobile">Position</label>
-              <input type="text" id="position" class="form-control" readonly="readonly">
+              <input type="text" id="position"  placeholder="${memberInfo.member_position}" class="form-control" readonly="readonly">
             </div>
           </div>
-            <div class="form-row">
+         <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="name">Office</label>
-              <input type="text" id="office" class="form-control" readonly="readonly">
+              <label for="mobile">Mobile</label>
+              <input type="text" id="mobile" placeholder="${memberInfo.member_mobile}" class="form-control" readonly="readonly">
             </div>
-            
-          </div>
-          <hr class="my-4">
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="confirmPassword">Online/Offline</label>
-                <input type="password" class="form-control" id="studyingStatus" readonly="readonly">
-              </div>
-             
+            <div class="form-group col-md-6">
+              <label for="email">E-mail</label>
+              <input type="text" id="email" placeholder="${memberInfo.member_email}" class="form-control" readonly="readonly">
             </div>
-             <div class="col-md-6">
-              <div class="form-group">
-                <label for="course">Course</label>
-                <input type="text" class="form-control" id="course" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" readonly="readonly">
-              </div>
+          </div>   
+          
+             <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="it_sc">IT_Score</label>
+              <input type="text" id="it_sc" placeholder="${memberInfo.member_sc_it}" class="form-control" readonly="readonly">
             </div>
-            
-             <div class="col-md-6">
-              <div class="form-group">
-                <label for="itClass">IT Class</label>
-                <input type="password" class="form-control" id="itClass" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="itScore">IT Score</label>
-                <input type="password" class="form-control" id="itScore" readonly="readonly">
-              </div>
-             
+            <div class="form-group col-md-6">
+              <label for="jp_sc">JP_Score</label>
+              <input type="text" id="jp_sc" placeholder="${memberInfo.member_sc_j}" class="form-control" readonly="readonly">
             </div>
-             <div class="col-md-6">
-              <div class="form-group">
-                <label for="jClass">Japanese Class</label>
-                <input type="text" class="form-control" id="jClass" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="jScore">Japanese Score</label>
-                <input type="text" class="form-control" id="jScore" readonly="readonly">
-              </div>
-              
-            </div>
-          </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Delete</button> <!-- 삭제하기 -->
+          </div>          
+      
+           <input type="hidden" name="savedfile" value="${memberInfo.savedfile }">
+          <input type="hidden" name="originalfile" value="${memberInfo.originalfile }">
+          <input type="hidden" name="member_no" value="${memberInfo.member_no}">
+          <input type="hidden" name="member_id" value="${memberInfo.member_id}">
           <br>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button> <!-- 수정하기 -->
-          <br>
+          </form>
+             <button class="btn btn-lg btn-primary btn-block" onclick="deleteMemberCheck()">Delete</button> <!-- 삭제하기 -->
+             <button class="btn btn-lg btn-primary btn-block" onclick="moveEditPage()">Edit</button> <!-- 수정하기 -->
           </div>
+          <br>
       </div>
     </div>
 </main>

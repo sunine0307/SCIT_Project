@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/resources/css/feather.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="/resources/css/daterangepicker.css">
-   <script src="/resources/js/bootstrap.min.js"></script>
+   
    <!-- App CSS -->
    <link rel="stylesheet" href="/resources/css/app-light.css" id="lightTheme">
    <!-- bootstrap4 -->
@@ -27,6 +27,8 @@
    <script src="/resources/js/bootstrap.min.js"></script>
    
    <script type="text/javascript" src="/resources/jquery-3.5.1.min.js"></script>
+   <script src="/resources/js/bootstrap.min.js"></script>   <!-- 위치변경  -->
+   
    <script type="text/javascript">
    
       // 개인예약확인페이지로 이동
@@ -128,7 +130,7 @@
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-              <a href="/mypage"  > <!-- 여기에 마이페이지 호출주소 넣어주면 됨 -->
+              <a href="/member2/mypage"  > <!-- 여기에 마이페이지 호출주소 넣어주면 됨 -->
                 <i class="fe fe-user fe-16"></i>
                 <span class="ml-3 item-text">MY PAGE</span>
               </a>
@@ -162,6 +164,8 @@
                 <span class="ml-3 item-text">CHATBOT</span>
               </a>
             </li>
+            <!-- error -->
+            
             <li class="nav-item dropdown">
               <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-layers fe-16"></i>
@@ -205,7 +209,7 @@
           </ul>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://www.naver.com/" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
+            <a href="/member2/logout" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
               <i class="fe fe-shield fe-16"></i><span class="small"> LOG OUT </span>
             </a>
           </div>     

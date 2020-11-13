@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/resources/favicon.ico">
-    <title>mypage</title>
+    <title>EditMyPage</title>
+    <script type="text/javascript" src="/resources/jquery-3.5.1.min.js"></script>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="/resources/css/simplebar.css">
     <!-- Fonts CSS -->
@@ -21,6 +22,12 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="/resources/css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="/resources/css/app-dark.css" id="darkTheme" disabled>
+    
+    <style>
+       .select_img img{margin: 10px 0;}
+    </style>
+    
+    
   </head>
   <body class="vertical  light  ">
   <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
@@ -113,106 +120,202 @@
           </ul>
           
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://www.naver.com/" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
+            <a href="/member2/logout" class="btn mb-2 btn-primary btn-lg btn-block"> <!-- 로그아웃 호출 주소 넣으면 됨 -->
               <i class="fe fe-shield fe-16"></i><span class="small"> LOG OUT </span>
             </a>
           </div>     
         </nav>
       </aside>
    <body class="light ">
-          
+   
+    <main role="main" class="main-content">   
+         <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>   
     <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <div class="col-lg-6 col-md-8 col-10 mx-auto"> <!-- 폼이 시작되는 지점, input 에 name 속성 잘 지정해서 등록 하도록 해주세요 !  -->
-          <div class="mx-auto text-center my-4">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="https://www.softsociety.net/">
-            <img src="/resources/myphoto.jpg" alt="..." class="avatar-img rounded-circle" height="250" width="200"> <!-- 프로필이 들어갈 경로 -->
-          </a>
-                      <h2 class="my-3">등록번호(학번)</h2>
+        
+          <form class="col-lg-6 col-md-8 col-10 mx-auto" action="/member2/updateMember" enctype="multipart/form-data" method="post">   <!-- start form -->
           
-          </div> 
+          <input type="hidden" id="member_no" name="member_no" value="${editMember.member_no }">
+         <!--  
+          <div class="mx-auto text-center my-4">
+            <div class="w-100 mb-4 d-flex">
+            <div class="navbar-brand mx-auto mt-2 flex-fill text-center" href="https://www.softsociety.net/">
+             
+             <c:if test="${not empty editMember.savedfile }">
+               <img src="/member2/download" class="avatar-img rounded-circle" height="250" width="200">
+             </c:if>
+            <c:if test="${empty editMember.savedfile }">
+                     첨부된 이미지가 없습니다.
+            </c:if>
+            </div>
+          </div>
+                      <h2 class="my-3">${editMember.member_no}</h2>
+          
+          </div>
+          -->
+         
+         <!--  
+         <div class="form-row">
+             <div class="form-group col-md-6">
+             <c:if test="${not empty editMember.savedfile }">
+               <label for="image">현재 업로드된 파일 : ${editMember.originalfile }</label>
+             </c:if>
+              <c:if test="${empty editMember.savedfile }">
+                     첨부된 이미지가 없습니다.
+            </c:if>
+              </div>
+         </div>
+          -->
+          
+          <hr class="my-4">
+          <div class="form-row">
+             <div class="form-group col-md-6">
+              <label for="image">Edit Profile</label>
+                 <input type="file" name="upload" id="gdsImg">
+                 
+                 <div class = "select_img">
+                    <img src="/member2/download" width = "300" height="400">
+                    <input type="hidden" name="savedfile" value="${editMember.savedfile }">
+                  <input type="hidden" name="originalfile" value="${editMember.originalfile }">
+                 </div>
+         
+             <script>   
+                 $("#gdsImg").change(function(){
+                  if(this.files && this.files[0]) {
+                   var reader = new FileReader;
+                   reader.onload = function(data) {
+                    $(".select_img img").attr("src", data.target.result).width(300);        
+                   }
+                   reader.readAsDataURL(this.files[0]);
+                  }
+                 });
+             </script>
+                
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name">ID</label>
+              <input type="text" id="name" name="member_id" value="${editMember.member_id}" class="form-control" readonly="readonly">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="course">PW</label>
+              <input type="text" id="course" name="member_pw" value="${editMember.member_pw}" class="form-control" <c:if test="${not empty sessionScope.kakao_id }" >readonly="readonly"</c:if>>
+            </div>
+          </div>
+          
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name">Name</label>
-              <input type="text" id="name" class="form-control" >
+              <input type="text" id="name" name="member_name" value="${editMember.member_name}" class="form-control">
             </div>
             <div class="form-group col-md-6">
-              <label for="mobile">Mobile</label>
-              <input type="text" id="Mobile" class="form-control">
+              <label for="course">Course</label>
+              <input type="text" id="course" name="member_course" value="${editMember.member_course}" class="form-control" >
             </div>
           </div>
-             <div class="form-row">
+           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name">Company</label>
-              <input type="text" id="company" class="form-control" >
+              <input type="text" id="company" name="member_company" value="${editMember.member_company}" class="form-control" >
             </div>
             <div class="form-group col-md-6">
               <label for="mobile">Position</label>
-              <input type="text" id="position" class="form-control" >
+              <input type="text" id="position" name="member_position" value="${editMember.member_position}" class="form-control" >
             </div>
           </div>
-            <div class="form-row">
+         <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="name">Office</label>
-              <input type="text" id="office" class="form-control" >
+              <label for="mobile">Mobile</label>
+              <input type="text" id="mobile" name="member_mobile" value="${editMember.member_mobile}" class="form-control" s>
             </div>
-            
-          </div>
-          <hr class="my-4">
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" >
-              </div>
-              <div class="form-group">
-                <label for="confirmPassword">Online/Offline</label>
-                <input type="password" class="form-control" id="studyingStatus" >
-              </div>
-             
+            <div class="form-group col-md-6">
+              <label for="email">E-mail</label>
+              <input type="text" id="email" name="member_email" value="${editMember.member_email}" class="form-control" >
             </div>
-             <div class="col-md-6">
-              <div class="form-group">
-                <label for="course">Course</label>
-                <input type="text" class="form-control" id="course" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" >
-              </div>
-            </div>
-            
-             <div class="col-md-6">
-              <div class="form-group">
-                <label for="itClass">IT Class</label>
-                <input type="password" class="form-control" id="itClass" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="itScore">IT Score</label>
-                <input type="password" class="form-control" id="itScore" readonly="readonly">
-              </div>
-             
-            </div>
-             <div class="col-md-6">
-              <div class="form-group">
-                <label for="jClass">Japanese Class</label>
-                <input type="text" class="form-control" id="jClass" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="jScore">Japanese Score</label>
-                <input type="text" class="form-control" id="jScore" readonly="readonly" >
-              </div>
-              
-            </div>
-          </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Update Information</button> <!-- 삭제하기 -->
-          <br>
+          </div>   
           
-          <p class="mt-5 mb-3 text-muted text-center">© 2020</p>
-        </div>
+          <!-- 관리자만 반 수정가능 조건 넣기 -->
+             <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="it_sc">IT_Score</label>
+              <input type="text" id="it_sc" name="member_sc_it" value="${editMember.member_sc_it}" class="form-control" >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="jp_sc">JP_Score</label>
+              <input type="text" id="jp_sc" name="member_sc_j" value="${editMember.member_sc_j}" class="form-control" >
+            </div>
+          </div>    
+          
+                 
+         
+          <!--<button class="btn btn-lg btn-primary btn-block" onclick="deleteMemberCheck()" type="submit">Delete</button>--> <!-- 삭제하기 -->
+          <br>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button> <!-- 수정하기 -->
+          
+          <!--<input type="submit" class="btn btn-lg btn-primary btn-block" id="editMemberInfo" value="Edit">-->
+         
+          <br>
+          </form> <!-- end form -->
+           <!-- 지우기 -->
+          <br>
+          <br>
+          <br>
       </div>
     </div>
+        <script src="/resources/table/vendor/jquery/jquery.min.js"></script>
+ <script type="text/javascript">
 
+    	var socket = null;
+    	$(document).ready( function() {
+    	    connect();	
+    	});
+
+	function connect(){
+		var ws = new WebSocket("ws://localhost:8888/replyEcho?bno=1234");
+		socket = ws;
+
+	    ws.onopen = function () {
+	        console.log('Info: connection opened.');
+	    };
+
+
+	    ws.onmessage = function (event) { 
+	        console.log("receive message: ",event.data+'\n');
+			let $socketAlert = $('div#socketAlert');
+			$socketAlert.text("Please Check Notice Board");
+			$socketAlert.css('display', 'block');
+			setTimeout(function(){
+				$socketAlert.css('display', 'none');
+				},10000);
+	    };
+
+
+	    ws.onclose = function (event) { 
+		    console.log('Info: connection closed.'); 
+		};
+	    ws.onerror = function (err) { 
+		    console.log('Error:' , err); 
+		};
+					
+		}
+	    
+	</script>
+    <script type="text/javascript">
+	$(function() {
+	    $('#btnSend').on('click', function(evt) {
+		  evt.preventDefault();
+	  if (socket.readyState !== 1) return;
+	    	  socket.send("새로운 공지가 등록되었습니다.");
+	    	  document.getElementById('noticeActivate').submit();
+	    });
+	    connect();
+		
+	});
+
+	</script> 
+</main>
     
     <!-- .wrapper -->
     <script src="/resources/js/jquery.min.js"></script>
@@ -223,8 +326,8 @@
     <script src='/resources/js/daterangepicker.js'></script>
     <script src='/resources/js/jquery.stickOnScroll.js'></script>
     <script src="/resources/js/tinycolor-min.js"></script>
-    <script src="/resources/js/config.js"></script>
-    <script src="/resources/js/apps.js"></script>
+    
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>

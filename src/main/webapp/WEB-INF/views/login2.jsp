@@ -26,45 +26,59 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="/resources/css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="/resources/css/app-dark.css" id="darkTheme" disabled>
+    
   </head>
   <body class="light ">
     <div class="wrapper vh-100">
-      <div class="row align-items-center h-100">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
         <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" action="/member2/login" method="post">
           <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="https://www.softsociety.net/">
             <svg version="1.1" id="logo" class="navbar-brand-img brand-md" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
               <img src="/resources/assets/images/sesoc.png" width="400px" height="200px"> <!-- 로고 클릭하면 자동으로 sesoc 웹사이트로 이동 -->
             </svg>
           </a>
-          <h1 class="h6 mb-3">LOGIN</h1>
           <div class="form-group">
             <label for="inputEmail" class="sr-only">ID</label>
-            <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" placeholder="id" autofocus="">
+            <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" placeholder="id" >
           </div>
           <div class="form-group">
             <label for="inputPassword" class="sr-only">PASSWORD</label>
             <input type="password" id="member_pw" name="member_pw" class="form-control form-control-lg" placeholder="Password">
           </div>
       	<!-- 이쯤에 카카오, 네이버 로그인 버튼 추가하시면 됩니다 -->	    
-           <input type= "button" class="btn btn-lg btn-primary btn-block" value="JOIN" onclick="moveJoin();">
            <br>
            <!-- 버튼 활성화해서 로그인 처리 해주시면 됩니다 -->
           <button class="btn btn-lg btn-primary btn-block" type="submit" value="LOGIN">LOGIN</button> <!-- 버튼 활성화해서 로그인 처리 해주시면 됩니다 -->
          
         <br>
         <!-- 네이버 로그인 창으로 이동 -->
-		<div id="naver_id_login" style="text-align:center"><a href="${url}">
-		<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
-		<br>
-				
+		
+           <input type= "button" class="btn btn-lg btn-primary btn-block" value="JOIN" onclick="moveJoin();">
 		<!-- 카카오 로그인 창으로 이동 -->
+		        <br>
+		
+		        <br>
+		
+		        <br>
+		
 		<div id="kakao_id_login" style="text-align:center"><a href="https://kauth.kakao.com/oauth/authorize?client_id=2e62014ff97c19cd48b281cffbf358a6&redirect_uri=http://localhost:8888/oauth&response_type=code">
 		<img width="223" src="https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png"/></a></div>
 		<br>
           
+
         </form>
       </div>
-    </div>
     <script src="/resources/js/jquery.min.js"></script>
     <script src="/resources/js/popper.min.js"></script>
     <script src="/resources/js/moment.min.js"></script>

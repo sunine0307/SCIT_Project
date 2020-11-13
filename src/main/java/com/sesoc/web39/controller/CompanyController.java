@@ -63,11 +63,10 @@ public class CompanyController {
 	
 	@RequestMapping(value="/updateCompany", method=RequestMethod.POST)
 	public String updateCompany(CompanyVO company) {
-		System.out.println("수정컨트롤러입니다.");
 		String page = service.updateCompany(company);
 		return page;
 	}
-	
+	@ResponseBody
 	@RequestMapping(value="/deleteCompany", method=RequestMethod.GET)
 	public String deleteCompany(int company_no) {
 		System.out.println("삭제컨트롤러입니다.");
@@ -76,15 +75,15 @@ public class CompanyController {
 	}
 	@RequestMapping(value="/addComment", method=RequestMethod.POST)
 	public String addComment(CommentVO comment) {
-		System.out.println("댓글 달기 컨트롤러입니다.");
 		String page = service.addComment(comment);
+		System.out.println("댓글달기");
+		System.out.println(comment);
 		return page;
 	}
-	
+		
 	@ResponseBody
 	@RequestMapping(value="/fetchComment", method=RequestMethod.POST)
 	public ArrayList<CommentVO> fetchComment(int company_no) {
-		System.out.println("댓글 가져오기 컨트롤러입니다.");
 		ArrayList<CommentVO> list = service.fetchComment(company_no);
 		return list;
 	}

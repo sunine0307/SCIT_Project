@@ -58,9 +58,15 @@ public class CompanyService {
 	}
 	
 	public String deleteCompany(int company_no){
-		dao.deleteCompany(company_no);
-
-		return "redirect:/companyInfo/companylist";
+		int cnt = dao.deleteCompany(company_no);
+		String result= null;
+		if (cnt==1) {
+			result="1";
+		}
+		else {
+			result="0";
+		}
+		return result;
 	}
 	
 	public String addComment(CommentVO comment) {
@@ -70,6 +76,8 @@ public class CompanyService {
 		int cnt = dao.addComment(comment);
 		int company_no=comment.getCompany_no();
 		String str = Integer.toString(company_no);
+		System.out.println("company_no");
+		System.out.println(company_no);
 		String page = "redirect:/companyInfo/companySelect?company_no="+str;
 		
 		return page;

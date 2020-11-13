@@ -57,6 +57,7 @@
         padding: 0;
       }
     </style>
+    <script type="text/javascript" src="/resources/jquery-3.5.1.min.js"></script>
     <script>
       "use strict";
 
@@ -66,7 +67,7 @@
       /* var c = document.getElementById("company_latitude").value; */
      // var a = 37.55358968871123
       //var b = 126.96979116137695
-    	
+       
       function initMap() {
           var a = document.getElementById("company_latitude").value;
           var b = document.getElementById("company_longitud").value;
@@ -85,7 +86,7 @@
           "http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM";
         const beachMarker = new google.maps.Marker({
              position: {
-            	 lat: a,
+                lat: a,
                  lng: b
           },
           map,
@@ -94,13 +95,42 @@
       }
       function updateForm(){
           var company_no = document.getElementById("company_no").value;
-			location.href="http://localhost:8888/companyInfo/updateForm?company_no="+company_no;
+         location.href="http://localhost:8888/companyInfo/updateForm?company_no="+company_no;
           }
+
+      /*
       function deleteCompany(){
-    	  var company_no = document.getElementById("company_no").value;
-    	  location.href="/companyInfo/deleteCompany?company_no="+company_no;
-    	  window.close();
+         var company_no = document.getElementById("company_no").value;
+         location.href="/companyInfo/deleteCompany?company_no="+company_no;
+         window.close();
           }
+      */
+
+   $(document).ready(function(){
+      $("#deleteCompany").click(function(){
+         $.ajax({
+            url: "/companyInfo/deleteCompany",
+            data:{
+               company_no : $('#company_no').val()
+            },
+            success : function(res){
+               if(res == "1"){
+                  window.close();
+                  // location.reload();
+               }else{
+                  alert("삭제실패");
+               }
+            },
+            error: function(e){
+                     alert("company does not exist");
+                     console.log(e);
+                  }
+         });
+
+      });
+
+   });
+      
     </script>
 
   
@@ -110,13 +140,16 @@
      
   
         <button type="button" class="btn mb-2 btn-primary btn-lg btn-block" onclick="window.open('${company.company_link}'); return false">${company.company_name } </button>
-        <button type="button" class="btn mb-2 btn-success" onclick="deleteCompany();">Delete</button> <span><button type="button" class="btn mb-2 btn-success" onclick="updateForm();">Update</button></span>
+       <!--  <button type="button" id="deleteCompany" class="btn mb-2 btn-success" onclick="deleteCompany()">Delete</button> -->
+         
+        <button type="button" id="deleteCompany" class="btn mb-2 btn-success">Delete</button>
+        <span><button type="button" class="btn mb-2 btn-success" onclick="updateForm();">Update</button></span>
         
                   <br> <!-- 지도가 들어갈 자리 -->
                  <center> <div id="map"></div>
                   <input type = "hidden" id = "company_longitud" value = "${company.company_longitud }">
-    			<input type = "hidden" id = "company_latitude" value = "${company.company_latitude }">
-    			<input type="hidden" id= "company_no" value="${company.company_no}" name= "company_no">
+             <input type = "hidden" id = "company_latitude" value = "${company.company_latitude }">
+             <input type="hidden" id= "company_no" value="${company.company_no}" name= "company_no">
                   </center>
   <br>
   <br>
@@ -140,12 +173,11 @@
                           <label for="exampleFormControlTextarea1" class="sr-only">Your Comment</label>
                           <textarea class="form-control bg-light" id="exampleFormControlTextarea1" rows="2" name="comment_content"></textarea>
                         </div>
+                        <input type="hidden" id= "company_no" value="${company.company_no}" name="company_no"> 
                         <div class="d-flex justify-content-between align-items-center">
-                          
                           <button type="submit" class="btn btn-primary">Add</button>
                           
                         </div>
-                        <input type="hidden" id= "company_no" value="${company.company_no}" name="company_no">
                       </form>
                     </div> <!-- .card-body -->
                   </div> <!-- .card -->
@@ -155,53 +187,53 @@
      <!-- .wrapper -->
     <script src="/resources/js/jquery.min.js"></script>
     <script type="text/javascript">
-	$(function(){
-		console.log("readReply시작전");
-		readReply();
-		});
-	function readReply(){
-		console.log("readreply시작");
-	$.ajax({
-		url: "/companyInfo/fetchComment",
-		type: "post",
-		data:{
-			company_no: ${company.company_no}
-			},
-		success: function(data){
-				console.log(data);
-				output(data);
-				
-			},
-		error: function(e){alert("통신 실패...");console.log(e);}
+   $(function(){
+      console.log("readReply시작전");
+      readReply();
+      });
+   function readReply(){
+      console.log("readreply시작");
+   $.ajax({
+      url: "/companyInfo/fetchComment",
+      type: "post",
+      data:{
+         company_no: ${company.company_no}
+         },
+      success: function(data){
+            console.log(data);
+            output(data);
+            
+         },
+      error: function(e){alert("통신 실패...");console.log(e);}
 
-			});
-			
-		}
-	function output(data){
-			var str="";
-		$.each(data,function(index,item){
-			str +='<div class="row align-items-center mb-4">';
-			str +='  <div class="col-auto">';
-			str +='<div class="avatar avatar-sm mb-3 mx-4">';
-			str +='<img src="/resources/assets/avatars/face-3.jpg" alt="..." class="avatar-img rounded-circle">';
-			str +='</div>';
-			str +=' </div>';
-			str +='<div class="col">';
-			str +=' <strong>';
-			str += " " +item.member_id; 
-			str +='</strong>';
-			str +=' <div class="mb-2">';
-			str +=" " + item.comment_content;
-			str +='</div>';
-			str +='<small class="text-muted">';
-			str +="" + item.comment_indate;
-			str +='</small>';
-			str +='</div>';
-			str +='</div>';
-		
-			});
-		$("#commentlist").html(str);
-		}
+         });
+         
+      }
+   function output(data){
+         var str="";
+      $.each(data,function(index,item){
+         str +='<div class="row align-items-center mb-4">';
+         str +='  <div class="col-auto">';
+         str +='<div class="avatar avatar-sm mb-3 mx-4">';
+         str +='<img src="/member2/download" alt="..." class="avatar-img rounded-circle">';
+         str +='</div>';
+         str +=' </div>';
+         str +='<div class="col">';
+         str +=' <strong>';
+         str += " " +item.member_id; 
+         str +='</strong>';
+         str +=' <div class="mb-2">';
+         str +=" " + item.comment_content;
+         str +='</div>';
+         str +='<small class="text-muted">';
+         str +="" + item.comment_indate;
+         str +='</small>';
+         str +='</div>';
+         str +='</div>';
+      
+         });
+      $("#commentlist").html(str);
+      }
     
   
       
@@ -212,7 +244,7 @@
      
       
 
-	 </script>
+    </script>
     <script src="/resources/js/popper.min.js"></script>
     <script src="/resources/js/moment.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -458,4 +490,3 @@
  
   </body>
 </html>
-

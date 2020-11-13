@@ -86,6 +86,8 @@ public class CompanyDAO {
 		int cnt=0;
 		try {
 			cnt=mapper.addComment(comment);
+			System.out.println("다오 입니다");
+			System.out.println(comment);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
